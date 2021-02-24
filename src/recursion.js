@@ -78,10 +78,14 @@ var sumBelow = function(n) {
     return 0;
   }
   if (n === 2) {
-    return isNegative ? -1 : 1;
+    return isNegative ?
+      -1 :
+      1;
   }
   var result = (n - 1) + sumBelow(n - 1);
-  return isNegative ? -result : result;
+  return isNegative ?
+    -result :
+    result;
 };
 
 // 6. Get the integers within a range (x, y).
@@ -89,7 +93,7 @@ var sumBelow = function(n) {
 var range = function(x, y) {
   var result = [];
   var diff = y - x;
-  var isNegative = false;
+  var isNegativeDiff = false;
 
   if (diff < 0) {
     diff = Math.abs(diff);
@@ -114,7 +118,15 @@ var range = function(x, y) {
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 //
 var exponent = function(base, exp) {
-
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp === 1) {
+    return base;
+  }
+  return exp > 0 ?
+    base * exponent(base, exp - 1) :
+    1 / exponent(base, exp - (exp * 2));
 };
 
 // 8. Determine if a number is a power of two.
@@ -122,15 +134,55 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  if (n === 1) {
+    return true;
+  }
+  if (n === 2) {
+    return true;
+  }
+  if (n < 2) {
+    return false;
+  }
+  return powerOfTwo(n / 2);
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  if (string.length === 1) {
+    return string;
+  }
+  return string[string.length - 1] + reverse(string.slice(0, string.length - 1));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  console.log(string);
+  if (string.length === 1) {
+    return true;
+  }
+  string = string.toLowerCase();
+  var midpoint = Math.floor(string.length / 2);
+  if (string.length % 2 !== 0) {
+    console.log('slicing');
+    string = string.slice(0, midpoint) + string.slice(midpoint + 1, string.length);
+  }
+  if (string.length === 2) {
+    if (string[0] === string[1]) {
+      return true;
+    }
+  }
+  var left = 0;
+  var right = string.length - 1;
+  if (left < right) {
+    console.log(string[left], string[right]);
+    if (string[left] !== string[right]) {
+      return false;
+    }
+    return palindrome(string.slice(1, string.length - 1));
+  }
 };
+
+palindrome('rotor');
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
