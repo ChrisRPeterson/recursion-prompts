@@ -102,13 +102,14 @@ var range = function(x, y) {
   if ((diff === 1) || (diff === 0)) {
     return [];
   }
-  if (diff === 2) {
-    return isNegativeDiff ? [x - 1] : [x + 1];
+  else if (diff === 2) {
+    return isNegativeDiff ?
+      [x - 1] :
+      [x + 1];
   }
-  if (isNegativeDiff) {
-    return [x - 1].concat(range(x - 1, y));
-  }
-  return [x + 1].concat(range(x + 1, y));
+  return isNegativeDiff ?
+    [x - 1].concat(range(x - 1, y)) :
+    [x + 1].concat(range(x + 1, y));
 };
 
 // 7. Compute the exponent of a number.
@@ -126,7 +127,7 @@ var exponent = function(base, exp) {
   }
   return exp > 0 ?
     base * exponent(base, exp - 1) :
-    1 / exponent(base, exp - (exp * 2));
+    1 / exponent(base, -exp);
 };
 
 // 8. Determine if a number is a power of two.
@@ -156,16 +157,18 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  console.log(string);
   if (string.length === 1) {
     return true;
   }
+
   string = string.toLowerCase();
+
   var midpoint = Math.floor(string.length / 2);
   if (string.length % 2 !== 0) {
     console.log('slicing');
     string = string.slice(0, midpoint) + string.slice(midpoint + 1, string.length);
   }
+
   if (string.length === 2) {
     if (string[0] === string[1]) {
       return true;
